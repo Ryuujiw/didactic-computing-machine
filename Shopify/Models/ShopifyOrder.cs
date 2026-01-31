@@ -48,6 +48,11 @@ public class ShopifyOrder
 
     [JsonPropertyName("total_discounts")] 
     public decimal? TotalDiscounts { get; set; }
+
+    [JsonPropertyName("shipping_lines")] public ICollection<ShippingInfo> ShippingLines { get; set; } = [];
+    
+    [JsonPropertyName("contact_email")]
+    public string? ContactEmail { get; set; }
 }
 
 public class NameValuePair
@@ -101,6 +106,11 @@ public class ShopifyAddress
 
     [JsonPropertyName("phone")]
     public string? Phone { get; set; }
+}
+
+public class ShippingInfo
+{
+    public string? Code { get; set; }
 }
 
 public class ShopifyCustomer

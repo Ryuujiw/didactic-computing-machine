@@ -1,3 +1,4 @@
+using System.Globalization;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -38,13 +39,19 @@ public class ShopifyWebhookController : ControllerBase
         });
         
         var deliveryNote = order.NoteAttributes.FirstOrDefault(x => x.Name == "Delivery-Note")?.Value ?? string.Empty;
+        DateTime.TryParseExact(deliveryDate, "yyyy/MM/dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime deliveryDateParsed);
+        
+        var deliveryDateSanitized = deliveryDateParsed.ToString("dd MMMM");
+        var zone = ZoneHelper.ToZone(order.ShippingLines?.FirstOrDefault()?.Code ?? string.Empty);
 
+        var billingContact = (order.BillingAddress?.Phone ?? order.ContactEmail) ?? string.Empty;
+         
         foreach (var item in items)
         {
             var orderToCreate = new Order(
-                order.CreatedAt.ToString(), 
-                order.BillingAddress?.Phone ?? string.Empty, 
-                deliveryDate,
+                order.CreatedAt.ToString("yyyy-MM-ddT:hh:mm.sssZ"), 
+                billingContact,
+                $"{zone}\n{deliveryDateSanitized}",
                 order.OrderNumber.ToString(), 
                 $"{item.Line1}\n{item.Line2}",
                 deliveryNote, 
