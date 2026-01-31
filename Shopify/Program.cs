@@ -29,6 +29,8 @@ builder.Services.AddSingleton<SheetsService>(provider =>
     });
 });
 
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -43,6 +45,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGet("/health", () => Results.Ok());
+app.MapHealthChecks("/health");
 
 app.Run();
