@@ -26,6 +26,8 @@ public class ShopifyWebhookController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
         
+        var ordersToCreate = new List<Order>();
+        
         // Get data that we need
         var deliveryDate = order.NoteAttributes.FirstOrDefault(x => x.Name == "Delivery-Date")?.Value ?? string.Empty;
 
@@ -55,18 +57,19 @@ public class ShopifyWebhookController : ControllerBase
                 order.TotalDiscounts.GetValueOrDefault(),
                 order.TotalPrice.GetValueOrDefault());
             
-            _logger.LogInformation("Order to send to sheets {@order}", orderToCreate);
-
-            var body = new ValueRange
-            {
-                Values = new List<IList<object>> { GoogleSheetsHelper.ToRow(orderToCreate) }
-            };
-
-            var request = _sheets.Spreadsheets.Values.Append(body, SpreadsheetId, "Sheet1!A1");
-            request.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
-
-            await request.ExecuteAsync();
+            ordersToCreate.Add(orderToCreate);
         }
+        
+        var rows = ordersToCreate.Select(x => GoogleSheetsHelper.ToRow(x)).ToList();
+        var body = new ValueRange
+        {
+            Values = rows
+        };
+
+        var request = _sheets.Spreadsheets.Values.Append(body, SpreadsheetId, "Sheet1!A1");
+        request.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
+
+        await request.ExecuteAsync();
         return Ok();
     }
 }
