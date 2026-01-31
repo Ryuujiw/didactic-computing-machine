@@ -76,6 +76,5 @@
     "operatingSystemFamily": "LINUX"
   },
   "registeredAt": "2026-01-31T07:39:25.450Z",
-  "enableFaultInjection": false,
   "tags": []
 }
