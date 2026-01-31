@@ -1,4 +1,4 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine AS base
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
@@ -13,9 +13,13 @@ COPY . .
 WORKDIR "/src/Shopify"
 RUN dotnet build "Shopify.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "Shopify.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish Shopify.csproj \
+    -c $BUILD_CONFIGURATION \
+    -o /app/publish \
+    --no-restore \
+    /p:UseAppHost=false \
+    /p:PublishTrimmed=true \
+    /p:PublishReadyToRun=true
 
 FROM base AS final
 WORKDIR /app
