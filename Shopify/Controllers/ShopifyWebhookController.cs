@@ -62,7 +62,7 @@ public class ShopifyWebhookController : ControllerBase
                 Values = new List<IList<object>> { GoogleSheetsHelper.ToRow(orderToCreate) }
             };
 
-            var request = _sheets.Spreadsheets.Values.Append(body, SpreadsheetId, "Sheet2!A:Z");
+            var request = _sheets.Spreadsheets.Values.Append(body, SpreadsheetId, "Sheet1!A1");
             request.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
 
             await request.ExecuteAsync();
