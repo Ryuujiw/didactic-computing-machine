@@ -1,5 +1,5 @@
 {
-  "family": "",
+  "family": "electric-rabbit-pu92px-shopify-exporter-repo-3427",
   "taskRoleArn": "",
   "executionRoleArn": "",
   "networkMode": "bridge",
@@ -31,44 +31,7 @@
       }
     }
   ],
-  "volumes": [
-    {
-      "name": "",
-      "host": {
-        "sourcePath": ""
-      },
-      "dockerVolumeConfiguration": {
-        "scope": "task",
-        "autoprovision": true,
-        "driver": "",
-        "driverOpts": {
-          "KeyName": ""
-        },
-        "labels": {
-          "KeyName": ""
-        }
-      },
-      "efsVolumeConfiguration": {
-        "fileSystemId": "",
-        "rootDirectory": "",
-        "transitEncryption": "ENABLED",
-        "transitEncryptionPort": 0,
-        "authorizationConfig": {
-          "accessPointId": "",
-          "iam": "ENABLED"
-        }
-      },
-      "fsxWindowsFileServerVolumeConfiguration": {
-        "fileSystemId": "",
-        "rootDirectory": "",
-        "authorizationConfig": {
-          "credentialsParameter": "",
-          "domain": ""
-        }
-      },
-      "configuredAtLaunch": true
-    }
-  ],
+  "volumes": [],
   "placementConstraints": [
     {
       "type": "memberOf",
@@ -88,16 +51,6 @@
   ],
   "pidMode": "host",
   "ipcMode": "host",
-  "proxyConfiguration": {
-    "type": "APPMESH",
-    "containerName": "",
-    "properties": [
-      {
-        "name": "",
-        "value": ""
-      }
-    ]
-  },
   "inferenceAccelerators": [
     {
       "deviceName": "",
@@ -110,6 +63,5 @@
   "runtimePlatform": {
     "cpuArchitecture": "X86_64",
     "operatingSystemFamily": "WINDOWS_SERVER_2019_FULL"
-  },
-  "enableFaultInjection": true
+  }
 }
