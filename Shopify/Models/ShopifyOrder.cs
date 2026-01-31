@@ -6,6 +6,9 @@ public class ShopifyOrder
 {
     [JsonPropertyName("id")]
     public long Id { get; set; }
+    
+    [JsonPropertyName("order_number")]
+    public int OrderNumber { get; set; }
 
     [JsonPropertyName("email")]
     public string? Email { get; set; }
@@ -14,7 +17,7 @@ public class ShopifyOrder
     public string? Currency { get; set; }
 
     [JsonPropertyName("total_price")]
-    public string? TotalPrice { get; set; }
+    public decimal? TotalPrice { get; set; }
 
     [JsonPropertyName("created_at")]
     public DateTimeOffset CreatedAt { get; set; }
@@ -30,6 +33,29 @@ public class ShopifyOrder
 
     [JsonPropertyName("customer")]
     public ShopifyCustomer? Customer { get; set; }
+    
+    [JsonPropertyName("note_attributes")] 
+    public ICollection<NameValuePair> NoteAttributes { get; set; } = [];
+    
+    [JsonPropertyName("financial_status")]
+    public string? FinancialStatus { get; set; }
+    
+    [JsonPropertyName("total_shipping_price_set")]
+    public TotalShippingCost TotalShippingCost { get; set; }
+    
+    [JsonPropertyName("total_line_items_price")]
+    public decimal? TotalLineItemPrice { get; set; }
+
+    [JsonPropertyName("total_discounts")] 
+    public decimal? TotalDiscounts { get; set; }
+}
+
+public class NameValuePair
+{
+    [JsonPropertyName("name")]
+    public string Name { get; set; }
+    [JsonPropertyName("value")]
+    public string Value { get; set; }
 }
 
 public class ShopifyLineItem
@@ -48,6 +74,9 @@ public class ShopifyLineItem
 
     [JsonPropertyName("sku")]
     public string? Sku { get; set; }
+    
+    [JsonPropertyName("properties")]
+    public ICollection<NameValuePair> Properties { get; set; }
 }
 
 public class ShopifyAddress
@@ -87,4 +116,16 @@ public class ShopifyCustomer
 
     [JsonPropertyName("last_name")]
     public string? LastName { get; set; }
+}
+
+public class MoneyCommon
+{
+    [JsonPropertyName("amount")]
+    public decimal Amount { get; set; }
+}
+
+public class TotalShippingCost
+{
+    [JsonPropertyName("shop_money")]
+    public MoneyCommon ShopMoney { get; set; }
 }
