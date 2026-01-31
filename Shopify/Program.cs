@@ -1,3 +1,9 @@
+using Amazon.SecretsManager;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Services;
+using Google.Apis.Sheets.v4;
+using Shopify.Helpers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +11,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddSingleton<IAmazonSecretsManager, AmazonSecretsManagerClient>();
+builder.Services.AddSingleton<AwsSecretsManagerHelper>();
+builder.Services.AddSingleton<SheetsService>(provider =>
+{
+    var secrets = provider.GetRequiredService<AwsSecretsManagerHelper>();
+    var json = secrets.GetSecretAsync("prod/google/sheets/service-account")
+        .GetAwaiter().GetResult();
+    var credential = GoogleCredential
+        .FromJson(json)
+        .CreateScoped(SheetsService.Scope.Spreadsheets);
+
+    return new SheetsService(new BaseClientService.Initializer
+    {
+        HttpClientInitializer = credential,
+        ApplicationName = "Shopify Webhook"
+    });
+});
 
 var app = builder.Build();
 

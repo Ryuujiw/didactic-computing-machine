@@ -1,4 +1,7 @@
+using Google.Apis.Sheets.v4;
+using Google.Apis.Sheets.v4.Data;
 using Microsoft.AspNetCore.Mvc;
+using Shopify.Helpers;
 using Shopify.Models;
 
 namespace Shopify.Controllers;
@@ -8,23 +11,24 @@ namespace Shopify.Controllers;
 public class ShopifyWebhookController : ControllerBase
 {
     private readonly ILogger<ShopifyWebhookController> _logger;
-
-    public ShopifyWebhookController(ILogger<ShopifyWebhookController> logger)
+    private readonly SheetsService _sheets;
+    private const string SpreadsheetId = "1brdeEFztd0ymjLER-lV2BZQD4TnWjk0OQowz1HLINDs";
+    public ShopifyWebhookController(ILogger<ShopifyWebhookController> logger,
+        SheetsService sheets)
     {
         _logger = logger;
+        _sheets = sheets;
     }
     
     [HttpPost("order-paid")]
-    public IActionResult OrderPaid([FromBody] ShopifyOrder order)
+    public async Task<IActionResult> OrderPaid([FromBody] ShopifyOrder order)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
         
         // Get data that we need
         var deliveryDate = order.NoteAttributes.FirstOrDefault(x => x.Name == "Delivery-Date")?.Value ?? string.Empty;
-        
-        
-        
+
         var items = order.LineItems.Select(x => new
         {
             Line1 = $"{x.Title} x {x.Quantity}",
@@ -52,11 +56,17 @@ public class ShopifyWebhookController : ControllerBase
                 order.TotalPrice.GetValueOrDefault());
             
             _logger.LogInformation("Order to send to sheets {@order}", orderToCreate);
+
+            var body = new ValueRange
+            {
+                Values = new List<IList<object>> { GoogleSheetsHelper.ToRow(orderToCreate) }
+            };
+
+            var request = _sheets.Spreadsheets.Values.Append(body, SpreadsheetId, "Sheet2!A:Z");
+            request.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
+
+            await request.ExecuteAsync();
         }
-
-        
-        // Send to google sheets
-
         return Ok();
     }
 }
