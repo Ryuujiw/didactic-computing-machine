@@ -14,7 +14,12 @@
         }
       ],
       "essential": true,
-      "environment": [],
+      "environment": [
+        {
+          "name": "ASPNETCORE_URLS",
+          "value": "http://+:8080"
+        }
+      ],
       "mountPoints": [],
       "volumesFrom": [],
       "secrets": [],
