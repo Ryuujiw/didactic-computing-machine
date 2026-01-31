@@ -13,13 +13,9 @@ COPY . .
 WORKDIR "/src/Shopify"
 RUN dotnet build "Shopify.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-RUN dotnet publish Shopify.csproj \
-    -c $BUILD_CONFIGURATION \
-    -o /app/publish \
-    --no-restore \
-    /p:UseAppHost=false \
-    /p:PublishTrimmed=true \
-    /p:PublishReadyToRun=true
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "Shopify.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
