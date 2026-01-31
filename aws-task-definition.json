@@ -1,8 +1,5 @@
 {
-  "family": "electric-rabbit-pu92px-shopify-exporter-repo-3427",
-  "taskRoleArn": "",
-  "executionRoleArn": "",
-  "networkMode": "bridge",
+  "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:979632270142:task-definition/electric-rabbit-pu92px-shopify-exporter-repo-3427:1",
   "containerDefinitions": [
     {
       "name": "Main",
@@ -31,37 +28,54 @@
       }
     }
   ],
+  "family": "electric-rabbit-pu92px-shopify-exporter-repo-3427",
+  "executionRoleArn": "arn:aws:iam::979632270142:role/service-role/ecsTaskExecutionRole",
+  "networkMode": "awsvpc",
+  "revision": 1,
   "volumes": [],
-  "placementConstraints": [
+  "status": "ACTIVE",
+  "requiresAttributes": [
     {
-      "type": "memberOf",
-      "expression": ""
+      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+    },
+    {
+      "name": "ecs.capability.execution-role-awslogs"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+    },
+    {
+      "name": "ecs.capability.execution-role-ecr-pull"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+    },
+    {
+      "name": "ecs.capability.task-eni"
     }
+  ],
+  "placementConstraints": [],
+  "compatibilities": [
+    "EC2",
+    "FARGATE",
+    "MANAGED_INSTANCES"
   ],
   "requiresCompatibilities": [
-    "EC2"
+    "FARGATE"
   ],
-  "cpu": "",
-  "memory": "",
-  "tags": [
-    {
-      "key": "",
-      "value": ""
-    }
-  ],
-  "pidMode": "host",
-  "ipcMode": "host",
-  "inferenceAccelerators": [
-    {
-      "deviceName": "",
-      "deviceType": ""
-    }
-  ],
-  "ephemeralStorage": {
-    "sizeInGiB": 0
-  },
+  "cpu": "256",
+  "memory": "512",
   "runtimePlatform": {
     "cpuArchitecture": "X86_64",
-    "operatingSystemFamily": "WINDOWS_SERVER_2019_FULL"
-  }
+    "operatingSystemFamily": "LINUX"
+  },
+  "registeredAt": "2026-01-31T07:39:25.450Z",
+  "enableFaultInjection": false,
+  "tags": []
 }
