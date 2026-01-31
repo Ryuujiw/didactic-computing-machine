@@ -1,11 +1,11 @@
 {
-  "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:979632270142:task-definition/electric-rabbit-pu92px-shopify-exporter-repo-3427:1",
+  "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:979632270142:task-definition/electric-rabbit-pu92px-shopify-exporter-repo-db80:1",
   "containerDefinitions": [
     {
       "name": "Main",
       "image": "979632270142.dkr.ecr.ap-southeast-2.amazonaws.com/shopify-exporter-repo:latest",
-      "cpu": 256,
-      "memoryReservation": 512,
+      "cpu": 1024,
+      "memoryReservation": 2048,
       "portMappings": [
         {
           "containerPort": 80,
@@ -21,14 +21,14 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/aws/ecs/electric-rabbit-pu92px/shopify-exporter-repo-3427-3e3a",
+          "awslogs-group": "/aws/ecs/electric-rabbit-pu92px/shopify-exporter-repo-db80-a1c7",
           "awslogs-region": "ap-southeast-2",
           "awslogs-stream-prefix": "ecs"
         }
       }
     }
   ],
-  "family": "electric-rabbit-pu92px-shopify-exporter-repo-3427",
+  "family": "electric-rabbit-pu92px-shopify-exporter-repo-db80",
   "executionRoleArn": "arn:aws:iam::979632270142:role/service-role/ecsTaskExecutionRole",
   "networkMode": "awsvpc",
   "revision": 1,
@@ -69,12 +69,12 @@
   "requiresCompatibilities": [
     "FARGATE"
   ],
-  "cpu": "256",
-  "memory": "512",
+  "cpu": "1024",
+  "memory": "2048",
   "runtimePlatform": {
     "cpuArchitecture": "X86_64",
     "operatingSystemFamily": "LINUX"
   },
-  "registeredAt": "2026-01-31T07:39:25.450Z",
+  "registeredAt": "2026-01-31T09:55:08.898Z",
   "tags": []
 }
