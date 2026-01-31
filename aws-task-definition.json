@@ -5,188 +5,30 @@
   "networkMode": "bridge",
   "containerDefinitions": [
     {
-      "name": "",
-      "image": "",
-      "repositoryCredentials": {
-        "credentialsParameter": ""
-      },
-      "cpu": 0,
-      "memory": 0,
-      "memoryReservation": 0,
-      "links": [
-        ""
-      ],
+      "name": "Main",
+      "image": "979632270142.dkr.ecr.ap-southeast-2.amazonaws.com/shopify-exporter-repo:latest",
+      "cpu": 256,
+      "memoryReservation": 512,
       "portMappings": [
         {
-          "containerPort": 0,
-          "hostPort": 0,
-          "protocol": "tcp",
-          "name": "",
-          "appProtocol": "http",
-          "containerPortRange": ""
+          "containerPort": 80,
+          "hostPort": 80,
+          "protocol": "tcp"
         }
       ],
       "essential": true,
-      "restartPolicy": {
-        "enabled": true,
-        "ignoredExitCodes": [
-          0
-        ],
-        "restartAttemptPeriod": 0
-      },
-      "entryPoint": [
-        ""
-      ],
-      "command": [
-        ""
-      ],
-      "environment": [
-        {
-          "name": "",
-          "value": ""
-        }
-      ],
-      "environmentFiles": [
-        {
-          "value": "",
-          "type": "s3"
-        }
-      ],
-      "mountPoints": [
-        {
-          "sourceVolume": "",
-          "containerPath": "",
-          "readOnly": true
-        }
-      ],
-      "volumesFrom": [
-        {
-          "sourceContainer": "",
-          "readOnly": true
-        }
-      ],
-      "linuxParameters": {
-        "capabilities": {
-          "add": [
-            ""
-          ],
-          "drop": [
-            ""
-          ]
-        },
-        "devices": [
-          {
-            "hostPath": "",
-            "containerPath": "",
-            "permissions": [
-              "read"
-            ]
-          }
-        ],
-        "initProcessEnabled": true,
-        "sharedMemorySize": 0,
-        "tmpfs": [
-          {
-            "containerPath": "",
-            "size": 0,
-            "mountOptions": [
-              ""
-            ]
-          }
-        ],
-        "maxSwap": 0,
-        "swappiness": 0
-      },
-      "secrets": [
-        {
-          "name": "",
-          "valueFrom": ""
-        }
-      ],
-      "dependsOn": [
-        {
-          "containerName": "",
-          "condition": "START"
-        }
-      ],
-      "startTimeout": 0,
-      "stopTimeout": 0,
-      "versionConsistency": "enabled",
-      "hostname": "",
-      "user": "",
-      "workingDirectory": "",
-      "disableNetworking": true,
-      "privileged": true,
-      "readonlyRootFilesystem": true,
-      "dnsServers": [
-        ""
-      ],
-      "dnsSearchDomains": [
-        ""
-      ],
-      "extraHosts": [
-        {
-          "hostname": "",
-          "ipAddress": ""
-        }
-      ],
-      "dockerSecurityOptions": [
-        ""
-      ],
-      "interactive": true,
-      "pseudoTerminal": true,
-      "dockerLabels": {
-        "KeyName": ""
-      },
-      "ulimits": [
-        {
-          "name": "core",
-          "softLimit": 0,
-          "hardLimit": 0
-        }
-      ],
+      "environment": [],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "secrets": [],
       "logConfiguration": {
-        "logDriver": "json-file",
+        "logDriver": "awslogs",
         "options": {
-          "KeyName": ""
-        },
-        "secretOptions": [
-          {
-            "name": "",
-            "valueFrom": ""
-          }
-        ]
-      },
-      "healthCheck": {
-        "command": [
-          ""
-        ],
-        "interval": 0,
-        "timeout": 0,
-        "retries": 0,
-        "startPeriod": 0
-      },
-      "systemControls": [
-        {
-          "namespace": "",
-          "value": ""
+          "awslogs-group": "/aws/ecs/electric-rabbit-pu92px/shopify-exporter-repo-3427-3e3a",
+          "awslogs-region": "ap-southeast-2",
+          "awslogs-stream-prefix": "ecs"
         }
-      ],
-      "resourceRequirements": [
-        {
-          "value": "",
-          "type": "GPU"
-        }
-      ],
-      "firelensConfiguration": {
-        "type": "fluentd",
-        "options": {
-          "KeyName": ""
-        }
-      },
-      "credentialSpecs": [
-        ""
-      ]
+      }
     }
   ],
   "volumes": [
