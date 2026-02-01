@@ -1,5 +1,5 @@
 {
-  "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:979632270142:task-definition/shopifytaskdef:1",
+  "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:979632270142:task-definition/shopifytaskdef:6",
   "containerDefinitions": [
     {
       "name": "api",
@@ -16,10 +16,8 @@
       ],
       "essential": true,
       "environment": [],
-      "environmentFiles": [],
       "mountPoints": [],
       "volumesFrom": [],
-      "ulimits": [],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -34,9 +32,10 @@
     }
   ],
   "family": "shopifytaskdef",
+  "taskRoleArn": "arn:aws:iam::979632270142:role/crustzShopifyReadSecrets",
   "executionRoleArn": "arn:aws:iam::979632270142:role/service-role/ecsTaskExecutionRole",
   "networkMode": "awsvpc",
-  "revision": 1,
+  "revision": 6,
   "volumes": [],
   "status": "ACTIVE",
   "requiresAttributes": [
@@ -51,6 +50,9 @@
     },
     {
       "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.task-iam-role"
     },
     {
       "name": "ecs.capability.execution-role-ecr-pull"
@@ -68,19 +70,19 @@
   "placementConstraints": [],
   "compatibilities": [
     "EC2",
-    "FARGATE",
-    "MANAGED_INSTANCES"
+    "MANAGED_INSTANCES",
+    "FARGATE"
   ],
   "requiresCompatibilities": [
     "FARGATE"
   ],
-  "cpu": "1024",
-  "memory": "2048",
+  "cpu": "256",
+  "memory": "512",
   "runtimePlatform": {
     "cpuArchitecture": "X86_64",
     "operatingSystemFamily": "LINUX"
   },
-  "registeredAt": "2026-01-31T16:43:35.751Z",
+  "registeredAt": "2026-02-01T10:23:54.856Z",
   "registeredBy": "arn:aws:iam::979632270142:root",
   "tags": []
 }
