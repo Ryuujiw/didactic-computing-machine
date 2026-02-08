@@ -26,8 +26,20 @@ public class ShopifyWebhookController : ControllerBase
     {
         _logger.LogInformation("Order paid webhook received. Order Id {orderId}, order: {@order}", order.Id, order);
         
-        var ordersToCreate = new List<Order>();
+        var getRequest = _sheets.Spreadsheets.Values.Get(SpreadsheetId, "Sheet1!D:D");
+        var existingOrdersResponse = await getRequest.ExecuteAsync();
+        var existingOrders = existingOrdersResponse.Values
+            .Where(r => r.Count > 0)
+            .Select(r => r[0]?.ToString())
+            .ToList();
 
+        if (existingOrders.Contains(order.OrderNumber.ToString()))
+        {
+            _logger.LogInformation("Order {orderNumber} already exists.", order.OrderNumber);
+            return;
+        }
+        
+        var ordersToCreate = new List<Order>();
         try
         {
             // Get data that we need
